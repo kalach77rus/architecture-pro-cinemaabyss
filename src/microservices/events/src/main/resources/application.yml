@@ -1,0 +1,25 @@
+server:
+  port: ${PORT:8082}
+
+spring:
+  application:
+    name: events
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS:"localhost:9092"}
+    consumer:
+      group-id: movie-service-group
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "*"
+
+kafka:
+  topics:
+    movies: movie-events
+    users: user-events
+    payments: payment-events
+    responses: responses
+
+logging:
+  level:
+    com.example.movieservice: INFO
+    org.springframework.kafka: INFO

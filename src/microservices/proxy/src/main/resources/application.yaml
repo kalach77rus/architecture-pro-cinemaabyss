@@ -1,0 +1,17 @@
+server:
+  port: ${PORT:8088}
+
+spring:
+  application:
+    name: simple_proxy
+
+api:
+  monolithUrl: ${MONOLITH_URL:http://localhost:8084}
+  moviesUrl: ${MOVIES_SERVICE_URL:http://localhost:8081}
+  eventsUrl: ${EVENTS_SERVICE_URL:http://localhost:8082}
+  gradualMigration: ${GRADUAL_MIGRATION:true}
+  moviesMigrationPercent: ${MOVIES_MIGRATION_PERCENT:50}
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

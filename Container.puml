@@ -1,0 +1,44 @@
+@startuml
+title Cinemabyss Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+
+Person(user, "User", "A user of Cinema system")
+
+System(CBSystem, "Cinema System", "System providing set of functions for Cinema watchers")
+Container_Boundary(CBSystem, "Cinemabyss System") {
+  Container(WebApp, "Web app", "", "")
+  Container(MobApp, "Mobile App", "")
+  Container(KFK, "Kafka", "", "")
+  Container(EVNT, "Events", "", "")
+  Container(MVS, "Movies", "", "")
+  Container(PRX, "Proxy", "", "")
+  Container(MTH, "Monolith", "", "")
+  }
+
+System_Ext(ONC, "Online Cinemas", "External Cinemas")
+System_Ext(S3, "Storage", "Storage")
+System_Ext(Bill, "Billing", "External billing System for Smarthouse services")
+System_Ext(RMS, "Recommend", "External recommendation system")
+
+Rel(user, MobApp, "Uses the system")
+Rel(user, WebApp, "Uses the system")
+
+Rel(MobApp, PRX, "Uses the system")
+Rel(WebApp, PRX, "Uses the system")
+Rel(PRX, MTH, "")
+Rel(PRX, MVS, "")
+
+Rel(KFK, EVNT, "")
+Rel(EVNT, KFK, "")
+Rel(MTH, MVS, "")
+Rel(MTH, ONC, "")
+Rel(MTH, S3, "")
+Rel(MTH, Bill, "")
+Rel(MTH, RMS, "")
+
+
+@enduml

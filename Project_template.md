@@ -5,7 +5,8 @@
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
+[ссылка на файл](Container.puml)
+<img width="925" height="695" alt="изображение" src="https://github.com/user-attachments/assets/456c5ee9-62f2-41f2-85d7-00dd47766648" />
 
 
 ## Задание 2
@@ -58,6 +59,9 @@
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka http://localhost:8090 
+<img width="1096" height="1280" alt="изображение" src="https://github.com/user-attachments/assets/4f3f5457-4a3d-4080-92db-92ccec11249c" />
+
+<img width="1280" height="698" alt="изображение" src="https://github.com/user-attachments/assets/a2b1ff98-f810-4645-bf60-cda558658551" />
 
 
 ## Задание 3
@@ -270,9 +274,14 @@ cat .docker/config.json | base64
   ```
   Часть тестов с health-чек упадет, но создание событий отработает.
   Откройте логи event-service и сделайте скриншот обработки событий
+  <img width="2890" height="1854" alt="image_2025-12-01_19-20-14" src="https://github.com/user-attachments/assets/8585235f-4059-4404-bbaa-91545a777c84" />
+
+
 
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
+<img width="3838" height="2176" alt="image_2025-12-01_19-20-53" src="https://github.com/user-attachments/assets/ff2e76b5-2fda-44bb-bac9-53daaf6a2aac" />
+<img width="1668" height="1866" alt="image_2025-12-01_19-21-59" src="https://github.com/user-attachments/assets/6c47a2c2-952d-4815-a57a-c3f7bab8b5bc" />
 
 
 ## Задание 4
@@ -348,6 +357,10 @@ minikube tunnel
 Потом вызовите 
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+<img width="3600" height="1922" alt="image_2025-12-03_12-11-57" src="https://github.com/user-attachments/assets/1d4e8ee9-c8c3-464f-91ea-40ae79383ff0" />
+<img width="1262" height="288" alt="image_2025-12-03_12-11-58" src="https://github.com/user-attachments/assets/d8757dc6-648c-4f60-bfc2-d94e35d1edd0" />
+<img width="834" height="256" alt="image_2025-12-03_12-11-58 (2)" src="https://github.com/user-attachments/assets/5e21acd3-2081-41a3-b917-cd708dbbfc19" />
+<img width="1580" height="1840" alt="image_2025-12-03_12-17-48" src="https://github.com/user-attachments/assets/4b8d6d74-58f4-4946-a06d-e9878968c8e2" />
 
 
 # Задание 5
@@ -414,6 +427,17 @@ You can see 21 for the upstream_rq_pending_overflow value which means 21 calls s
 ```
 
 Приложите скриншот работы circuit breaker'а
+<img width="1976" height="246" alt="image_2025-12-03_12-38-03" src="https://github.com/user-attachments/assets/e39a874f-9f53-4ec9-ad18-9fec52231ec9" />
+
+Результат запуска fortio:
+IP addresses distribution:
+10.100.208.109:8081: 410
+Code 200 : 100 (20.0 %)
+Code 503 : 400 (80.0 %)
+Response Header Sizes : count 500 avg 32.126 +/- 64.25 min 0 max 161 sum 16063
+Response Body/Total Sizes : count 500 avg 597.926 +/- 713.9 min 241 max 2026 sum 298963
+All done 500 calls (plus 0 warmup) 38.490 ms avg, 272.4 qps
+
 
 Удаляем все
 ```bash
