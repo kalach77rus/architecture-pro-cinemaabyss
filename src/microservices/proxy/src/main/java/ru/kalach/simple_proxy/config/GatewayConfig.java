@@ -20,16 +20,20 @@ public class GatewayConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("api-mono", r -> r
-                        .weight("movies", 100 - gatewayProperties.getMoviesMigrationPercent())
+                        .path("/api/movies/**")
                         .and()
-                        .path("/api/**")
+                        .weight("movies", 100 - gatewayProperties.getMoviesMigrationPercent())
                         .uri(gatewayProperties.getMonolithUrl())
                 )
                 .route("cinema-micro", r -> r
-                        .weight("movies", gatewayProperties.getMoviesMigrationPercent())
+                        .path("/api/movies/**")
                         .and()
-                        .path("/api/**")
+                        .weight("movies", gatewayProperties.getMoviesMigrationPercent())
                         .uri(gatewayProperties.getMoviesUrl())
+                )
+                .route("api-default", r -> r
+                    .path("/api/**")
+                    .uri(gatewayProperties.getMonolithUrl())
                 )
                 .build();
     }

@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieResponse {
-    private String originalName;
-    private int duration;
+    private int id;
+    private String name;
+    private String action;
+    private int userId;
     private String status;
     private long processedAt;
 }

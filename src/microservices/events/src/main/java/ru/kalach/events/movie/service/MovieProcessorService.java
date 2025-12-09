@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
-import ru.kalach.events.movie.model.Movie;
+import ru.kalach.events.movie.model.MovieEvent;
 import ru.kalach.events.movie.model.MovieResponse;
-import ru.kalach.events.movie.model.Payment;
-import ru.kalach.events.movie.model.User;
+import ru.kalach.events.movie.model.PaymentEvent;
+import ru.kalach.events.movie.model.UserEvent;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,10 +21,10 @@ public class MovieProcessorService {
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    @Value("${kafka.topics.response:responses}")
+    @Value("${kafka.topics.responses:responses}")
     private String responseTopic;
 
-    @Value("${kafka.topics.movie:movie}")
+    @Value("${kafka.topics.movies:movie}")
     private String movieTopic;
 
     @Value("${kafka.topics.users:user}")
@@ -33,13 +33,15 @@ public class MovieProcessorService {
     @Value("${kafka.topics.payments:payment}")
     private String paymentsTopic;
 
-    public void processMovie(Movie movie) {
+    public void processMovie(MovieEvent movie) {
         log.info("Processing movie: {}", movie);
 
         // Создаем ответ
         MovieResponse response = new MovieResponse(
+                movie.getId(),
                 movie.getName(),
-                movie.getDuration(),
+                movie.getAction(),
+                movie.getUserId(),
                 "PROCESSED",
                 System.currentTimeMillis()
         );
@@ -65,7 +67,7 @@ public class MovieProcessorService {
         }
     }
 
-    public void sendMovie(Movie movie) {
+    public void sendMovieEvent(MovieEvent movie) {
         try {
             CompletableFuture<SendResult<String, Object>> future =
                     kafkaTemplate.send(movieTopic, movie);
@@ -82,7 +84,7 @@ public class MovieProcessorService {
         }
     }
 
-    public void sendUser(User user) {
+    public void sendUserEvent(UserEvent user) {
         try {
             CompletableFuture<SendResult<String, Object>> future =
                     kafkaTemplate.send(usersTopic, user);
@@ -99,7 +101,7 @@ public class MovieProcessorService {
         }
     }
 
-    public void sendPayment(Payment payment) {
+    public void sendPaymentEvent(PaymentEvent payment) {
         try {
             CompletableFuture<SendResult<String, Object>> future =
                     kafkaTemplate.send(paymentsTopic, payment);

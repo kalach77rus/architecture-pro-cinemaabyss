@@ -7,9 +7,9 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import ru.kalach.events.movie.model.Movie;
-import ru.kalach.events.movie.model.Payment;
-import ru.kalach.events.movie.model.User;
+import ru.kalach.events.movie.model.MovieEvent;
+import ru.kalach.events.movie.model.PaymentEvent;
+import ru.kalach.events.movie.model.UserEvent;
 
 @Component
 @Slf4j
@@ -20,7 +20,7 @@ public class MovieConsumer {
 
     @KafkaListener(topics = "${kafka.topics.movies:movies}")
     public void listenMovieEvent(
-            @Payload Movie movie,
+            @Payload MovieEvent movie,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
             @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
             @Header(KafkaHeaders.OFFSET) long offset) {
@@ -37,7 +37,7 @@ public class MovieConsumer {
 
     @KafkaListener(topics = "${kafka.topics.users:users}")
     public void listenUserEvent(
-            @Payload User user,
+            @Payload UserEvent user,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
             @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
             @Header(KafkaHeaders.OFFSET) long offset) {
@@ -48,7 +48,7 @@ public class MovieConsumer {
 
     @KafkaListener(topics = "${kafka.topics.payments:payments}")
     public void listenPaymentEvent(
-            @Payload Payment payment,
+            @Payload PaymentEvent payment,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
             @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
             @Header(KafkaHeaders.OFFSET) long offset) {
